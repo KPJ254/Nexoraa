@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NEXORA — A Smart Hub for Every Age</title>
+<meta name="description" content="NEXORA — resources, games and tools for kids, teens, adults and seniors." />
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --muted:#9aa4b2;
+    --accent:#6ee7b7;
+    --glass: rgba(255,255,255,0.03);
+    --max-width:1100px;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #e6eef8;
+  }
+  *{box-sizing: border-box;}
+  body{
+    margin:0;
+    background: linear-gradient(180deg,#031024 0%, #071226 60%);
+    color: var(--muted);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height:1.45;
+  }
+  .container{
+    max-width: var(--max-width);
+    margin:28px auto;
+    padding:0 18px;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logo{
+    width:46px;
+    height:46px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#0ea5a3,#60a5fa);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#022;
+    box-shadow:0 6px 20px rgba(12,18,35,0.6);
+  }
+  h1{
+    font-size:20px;
+    margin:0;
+    color:#e6f6ff;
+  }
+  nav{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  a.navlink{
+    color: var(--muted);
+    text-decoration:none;
+    padding:6px 10px;
+    border-radius:8px;
+  }
+  a.navlink:hover{
+    background: var(--glass);
+    color:#fff;
+  }
+  main{
+    margin-top:18px;
+  }
+  .grid{
+    display:grid;
+    gap:16px;
+    grid-template-columns:1fr 360px;
+  }
+  @media (max-width:900px){
+    .grid{
+      grid-template-columns:1fr;
+    }
+    nav{
+      order:2;
+      width:100%;
+    }
+    header{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:12px;
+    }
+  }
+  .hero{
+    background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+    padding:18px;
+    border-radius:14px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  .hero-left{
+    flex:1;
+  }
+  .hero p{
+    color:var(--muted);
+    margin:8px 0 0;
+  }
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:12px;
+  }
+  @media (max-width:700px){
+    .cards{
+      grid-template-columns:1fr;
+    }
+  }
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:14px;
+    border-radius:12px;
+  }
+  .card h3{
+    margin:0 0 8px;
+    color:#e6f6ff;
+  }
+  small{
+    color: var(--muted);
+  }
+  section{
+    margin-top:16px;
+  }
+  .age-section{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:900px){
+    .age-section{
+      grid-template-columns:1fr;
+    }
+  }
+  label{
+    display:block;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  input[type="number"], input[type="text"], textarea, select{
+    width:100%;
+    padding:8px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.04);
+    background:transparent;
+    color:var(--muted);
+  }
+  button{
+    background:linear-gradient(90deg,#16a34a,#06b6d4);
+    border:none;
+    color:#022;
+    padding:9px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+  }
+  button.secondary{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--muted);
+    padding:8px 10px;
+  }
+  .muted{ color: var(--muted); }
+  .small{ font-size:13px; }
+  ul{ padding-left:18px; }
+  .metrics{ display:flex; gap:10px; align-items:center; }
+  .pill{
+    background: rgba(255,255,255,0.02);
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  footer{
+    margin:30px 0;
+    color:var(--muted);
+    font-size:13px;
+    text-align:center;
+  }
+  /* memory game */
+  .memory-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+  }
+  .card-m{
+    background:linear-gradient(180deg,#072033,#051726);
+    height:80px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#fff;
+    cursor:pointer;
+    user-select:none;
+  }
+  .flipped{
+    background:linear-gradient(90deg,#f59e0b,#fb7185);
+    color:#022;
+  }
+  form.contact-form {
+    display:grid;
+    gap:12px;
+  }
+  form.contact-form label {
+    font-weight:600;
+    color:#e6f6ff;
+  }
+  form.contact-form input,
+  form.contact-form textarea,
+  form.contact-form select {
+    border:1px solid rgba(255,255,255,0.1);
+    padding:8px;
+    border-radius:8px;
+    background:transparent;
+    color:var(--muted);
+    resize:vertical;
+  }
+  form.contact-form button { justify-self: start; }
+
+  /* small styles for riddle input & feedback */
+  .riddle-input {
+    width:100%;
+    padding:8px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:transparent;
+    color:var(--muted);
+    margin-top:8px;
+  }
+  .riddle-feedback { margin-top:8px; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="container" role="main">
+<header>
+  <div class="brand" aria-hidden="false">
+    <div class="logo" aria-hidden="true">NX</div>
+    <div>
+      <h1>NEXORA</h1>
+      <div class="small muted">A smart hub — tools & fun for every age</div>
+    </div>
+  </div>
+  <nav aria-label="Main navigation">
+    <a class="navlink" href="#kids">Kids</a>
+    <a class="navlink" href="#teens">Teens</a>
+    <a class="navlink" href="#adults">Adults</a>
+    <a class="navlink" href="#seniors">Seniors</a>
+    <a class="navlink" href="#contact">Contact</a>
+  </nav>
+</header>
+<main>
+  <div class="grid">
+    <div>
+      <section class="hero card" aria-labelledby="hero-title">
+        <div class="hero-left">
+          <h2 id="hero-title">Welcome to NEXORA — Smart & friendly tools for every age</h2>
+          <p>Pick a section below for quick activities, health tips, learning helpers and simple utilities tailored to different life stages.</p>
+          <div class="cards" aria-hidden="false">
+            <div class="card">
+              <h3>Story of the week</h3>
+              <div id="story" class="story">Loading story…</div>
+              <button onclick="nextStory()">Next Story</button>
+            </div>
+            <div class="card">
+              <h3>Did You Know?</h3>
+              <div id="fact" class="fact">Loading fact…</div>
+              <button onclick="nextFact()">Next Fact</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT OUR WEBSITE SECTION -->
+      <section id="about" class="card" aria-label="About NEXORA">
+        <h3>About Our Website</h3>
+        <p class="small muted">NEXORA is your all-in-one smart hub, designed to make life easier, fun, and meaningful for every age — from playful kids to curious teens, busy adults, and wise seniors. It turns learning into an adventure, blending games, quizzes, and creative activities that spark curiosity and imagination. Teens can track moods, discover new skills, and stay motivated, while adults can plan, organize, and simplify their daily routines effortlessly. Seniors can enjoy engaging exercises, brain-boosting games, and tips for a healthy mind and body. NEXORA shares practical wellbeing tips, inspires mindfulness, and encourages positive habits that make life balanced and joyful. Lightweight, friendly, and super easy to navigate, it brings education, health, creativity, and productivity together in one seamless place. It’s not just a platform — it’s a space for growth, connection, and exploration, where every user can learn, play, and thrive. Built with love and vision by Krupa, Jiya, and Poorvi — together known as KPJ Groups — NEXORA is constantly evolving, bringing fresh ideas, new features, and endless opportunities for learning, wellness, and fun for everyone.
+
+
+        Need help or want to share feedback? You can reach us at:
+        📧 jiyatreesajames@gmail.com
+        📧 poorvivashit@gmail.com
+        📧 krupak.s2012@gmail.com</p>
+      </section>
+
+      <!-- KIDS SECTION -->
+      <section id="kids" class="age-section" aria-label="Kids">
+        <div class="card">
+          <h3>For Kids: Fun & Learning 🎨</h3>
+          <p class="small muted">Color matching game: pick the correct box for the colour name shown!</p>
+          <div id="color-game"></div>
+          <button onclick="setupColorGame()">Restart Colour Game</button>
+        </div>
+        <aside class="card" aria-label="Kids' educational links">
+          <h4>Learn & Play</h4>
+          <ul>
+            <li><a href="https://www.starfall.com" target="_blank" rel="noopener" class="navlink">Starfall Education</a></li>
+            <li><a href="https://pbskids.org" target="_blank" rel="noopener" class="navlink">PBS Kids</a></li>
+            <li><a href="https://www.funbrain.com" target="_blank" rel="noopener" class="navlink">Funbrain</a></li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- TEENS SECTION -->
+      <section id="teens" class="age-section" aria-label="Teens">
+        <div class="card">
+          <h3>For Teens: Study & Health Tips 📚</h3>
+          <h4>Study Timer (Pomodoro)</h4>
+          <label for="timer-minutes">Set minutes:</label>
+          <input type="number" id="timer-minutes" min="1" max="120" value="25" aria-describedby="timer-desc" />
+          <div>
+            <button onclick="startTimer()">Start</button>
+            <button onclick="pauseTimer()">Pause</button>
+            <button onclick="resetTimer()">Reset</button>
+          </div>
+          <p id="timer-desc" class="small muted">Pomodoro style focus timer.</p>
+          <p id="timer-display" aria-live="polite" aria-atomic="true" style="font-weight:700; font-size:1.3rem; margin-top:8px;">25:00</p>
+
+          <hr style="opacity:0.04" />
+          <h4>Quiz Time!</h4>
+          <p class="small muted" id="teen-question">Loading question…</p>
+          <button onclick="showAnswer()">Show Answer</button>
+          <button onclick="nextQuestion()">Next Question</button>
+        </div>
+        <aside class="card">
+          <h4>Health Tips</h4>
+          <ul class="tips">
+            <li>Take short breaks every 25 minutes.</li>
+            <li>Keep hydrated and eat healthy snacks.</li>
+            <li>Stretch your body regularly to avoid stiffness.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- ADULTS SECTION -->
+      <section id="adults" class="age-section" aria-label="Adults">
+        <div class="card">
+          <h3>For Adults: Budget Planner & Wellbeing 💼</h3>
+          <h4>Simple Budget Planner</h4>
+          <div class="budget-grid">
+            <div>
+              <label for="income">Monthly Income (AED):</label>
+              <input type="number" id="income" min="0" step="100" value="5000" />
+            </div>
+            <div>
+              <label for="expenses">Monthly Expenses (AED):</label>
+              <input type="number" id="expenses" min="0" step="100" value="3000" />
+            </div>
+            <div>
+              <label for="savingsGoal">Savings Goal (AED):</label>
+              <input type="number" id="savingsGoal" min="0" step="100" value="500" />
+            </div>
+            <div>
+              <button onclick="calcBudget()">Calculate</button>
+              <button onclick="downloadBudget()">Download Summary</button>
+            </div>
+          </div>
+          <p id="budgetResult" aria-live="polite" style="margin-top:10px; font-weight:700;"></p>
+        </div>
+        <aside class="card">
+          <h4>Adult Wellbeing Tips</h4>
+          <ul class="tips">
+            <li>Exercise at least 30 minutes a day.</li>
+            <li>Practice mindfulness and manage stress.</li>
+            <li>Keep social connections strong.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <!-- SENIORS SECTION -->
+      <section id="seniors" class="age-section" aria-label="Seniors">
+        <div class="card">
+          <h3>For Seniors: Relax & Stay Sharp 🧘</h3>
+          <h4>Breathing Exercise</h4>
+          <p class="small muted">Try this simple 4-7-8 breathing pattern:</p>
+          <ol class="tips">
+            <li>Inhale quietly through your nose for 4 seconds.</li>
+            <li>Hold your breath for 7 seconds.</li>
+            <li>Exhale completely through your mouth for 8 seconds.</li>
+            <li>Repeat 3 times.</li>
+          </ol>
+        </div>
+        <aside class="card">
+          <h4>Brain Teasers</h4>
+
+          <!-- START: Replaced Brain Teasers area (random riddles + input) -->
+          <p id="riddle" class="small muted">Loading riddle…</p>
+          <input type="text" id="riddleAnswer" class="riddle-input" placeholder="Type your answer here..." aria-label="Type your riddle answer" />
+          <div style="margin-top:8px;">
+            <button onclick="checkRiddleAnswer()">Submit</button>
+            <button onclick="nextRiddle()">Next Riddle</button>
+          </div>
+          <p id="riddleFeedback" class="riddle-feedback small muted" aria-live="polite"></p>
+          <!-- END: Replaced Brain Teasers area -->
+
+        </aside>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="card" aria-label="Contact Us">
+        <h3>Contact Us 📬</h3>
+        <form class="contact-form" onsubmit="handleContactSubmit(event)">
+          <label for="recipient">Who should receive your message?</label>
+          <select id="recipient" required>
+            <option value="">Select recipient…</option>
+            <option value="support">Support Team</option>
+            <option value="info">Info Desk</option>
+            <option value="feedback">Feedback & Suggestions</option>
+          </select>
+
+          <label for="name">Name:</label>
+          <input type="text" id="name" required />
+
+          <label for="email">Email:</label>
+          <input type="text" id="email" required />
+
+          <label for="message">Message:</label>
+          <textarea id="message" rows="4" required></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+      </section>
+
+    </div>
+    <aside>
+      <!-- GOOGLE TRANSLATE WIDGET -->
+      <div id="google_translate_element" style="margin-bottom:20px;"></div>
+    </aside>
+  </div>
+</main>
+<footer>
+  &copy; 2025 NEXORA — Designed for learning and fun at all ages.
+</footer>
+
+<script>
+  // STORY & FACT DATA
+  const stories = [
+    "Once upon a time, in a little village, a curious child discovered a magical garden.",
+    "In the forest, animals held a secret meeting to solve the mystery of the missing river.",
+    "A young inventor created a device to make the skies cleaner and the air fresher."
+  ];
+  let storyIndex = 0;
+
+  function nextStory() {
+    storyIndex = (storyIndex + 1) % stories.length;
+    document.getElementById('story').textContent = stories[storyIndex];
+  }
+  document.getElementById('story').textContent = stories[storyIndex];
+
+  const facts = [
+    "Honey never spoils and can last thousands of years.",
+    "Octopuses have three hearts and blue blood.",
+    "Sharks have been around longer than trees.",
+    "A group of flamingos is called a 'flamboyance.'",
+    "Your nose can remember 50,000 different scents.",
+    "Bananas are berries, but strawberries are not."
+  ];
+  let factIndex = 0;
+
+  function nextFact() {
+    factIndex = (factIndex + 1) % facts.length;
+    document.getElementById('fact').textContent = facts[factIndex];
+  }
+  document.getElementById('fact').textContent = facts[factIndex];
+
+  // MEMORY GAME (Kids)
+  const memoryCards = ['8','0','6','6','0','4','8','4'];
+  let flipped = [];
+  let matched = [];
+  let memoryGrid;
+
+  function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
+
+  function createMemoryGame() {
+    memoryGrid = document.getElementById('memory-game');
+    if (memoryGrid) {
+      memoryGrid.innerHTML = '';
+      flipped = [];
+      matched = [];
+      const shuffledCards = shuffle(memoryCards.slice());
+      shuffledCards.forEach((emoji, index) => {
+        const card = document.createElement('div');
+        card.className = 'card-m';
+        card.setAttribute('tabindex','0');
+        card.setAttribute('role','button');
+        card.setAttribute('aria-pressed','false');
+        card.dataset.index = index;
+        card.dataset.emoji = emoji;
+        card.textContent = '';
+        card.addEventListener('click', () => flipCard(card));
+        card.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            flipCard(card);
+          }
+        });
+        memoryGrid.appendChild(card);
+      });
+    }
+  }
+
+  function flipCard(card) {
+    if (matched.includes(card) || flipped.includes(card) || flipped.length === 2) return;
+    card.textContent = card.dataset.emoji;
+    card.classList.add('flipped');
+    card.setAttribute('aria-pressed','true');
+    flipped.push(card);
+    if (flipped.length === 2) {
+      setTimeout(checkMatch, 800);
+    }
+  }
+
+  function checkMatch() {
+    if (flipped[0].dataset.emoji === flipped[1].dataset.emoji) {
+      matched.push(flipped[0], flipped[1]);
+      flipped = [];
+      if (matched.length === memoryCards.length) {
+        alert('Great job! You matched all pairs!');
+      }
+    } else {
+      flipped.forEach(c => {
+        c.textContent = '';
+        c.classList.remove('flipped');
+        c.setAttribute('aria-pressed','false');
+      });
+      flipped = [];
+    }
+  }
+
+  function resetMemory() {
+    createMemoryGame();
+  }
+
+  createMemoryGame();
+
+  // COLOR MATCHING GAME (Kids)
+  const colorGame = document.getElementById('color-game');
+  const colors = [
+    {name:'Red', color:'#ef4444'},
+    {name:'Green', color:'#22c55e'},
+    {name:'Blue', color:'#3b82f6'},
+    {name:'Yellow', color:'#eab308'},
+    {name:'Purple', color:'#8b5cf6'}
+  ];
+  let currentColorName = '';
+
+  function setupColorGame(){
+    if (!colorGame) return;
+    colorGame.innerHTML = '';
+    const pick = colors[Math.floor(Math.random()*colors.length)];
+    currentColorName = pick.name;
+    const prompt = document.createElement('div');
+    prompt.textContent = `Click the box for: ${currentColorName}`;
+    prompt.style.fontWeight = '700';
+    prompt.style.marginBottom = '8px';
+    colorGame.appendChild(prompt);
+
+    const shuffledBoxes = colors.slice().sort(() => Math.random()-0.5);
+    shuffledBoxes.forEach(c => {
+      const box = document.createElement('div');
+      box.style.width = '60px';
+      box.style.height = '60px';
+      box.style.backgroundColor = c.color;
+      box.style.borderRadius = '10px';
+      box.style.margin = '6px';
+      box.style.display = 'inline-block';
+      box.style.cursor = 'pointer';
+      box.setAttribute('aria-label', `Color ${c.name}`);
+      box.addEventListener('click', () => {
+        if(c.name === currentColorName){
+          alert('Correct! 🎉');
+        } else {
+          alert('Try again! ❌');
+        }
+        setupColorGame();
+      });
+      colorGame.appendChild(box);
+    });
+  }
+  setupColorGame();
+
+  // STUDY TIMER (Teens)
+  let timerInterval;
+  let timeLeft = 1500;
+  let timerRunning = false;
+
+  function updateTimerDisplay() {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    document.getElementById('timer-display').textContent =
+      `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+  }
+
+  function startTimer(){
+    if(timerRunning) return;
+    const inputMinutes = parseInt(document.getElementById('timer-minutes').value);
+    if(!timerRunning && (timeLeft === 0 || timeLeft === parseInt(inputMinutes)*60)){
+      if(inputMinutes > 0 && inputMinutes <= 120){
+        timeLeft = inputMinutes * 60;
+        updateTimerDisplay();
+      }
+    }
+    timerRunning = true;
+    timerInterval = setInterval(() => {
+      if(timeLeft > 0){
+        timeLeft--;
+        updateTimerDisplay();
+      } else {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        alert('Time is up! Take a break.');
+      }
+    },1000);
+  }
+
+  function pauseTimer(){
+    clearInterval(timerInterval);
+    timerRunning = false;
+  }
+
+  function resetTimer(){
+    clearInterval(timerInterval);
+    timerRunning = false;
+    const inputMinutes = parseInt(document.getElementById('timer-minutes').value);
+    timeLeft = (inputMinutes > 0 ? inputMinutes : 25) * 60;
+    updateTimerDisplay();
+  }
+  resetTimer();
+
+  // TEENS QUIZ QUESTIONS
+  const teenQuestions = [
+    {q:"What is the capital of France?", a:"Paris"},
+    {q:"Who wrote 'Romeo and Juliet'?", a:"William Shakespeare"},
+    {q:"What planet is known as the Red Planet?", a:"Mars"},
+    {q:"What is H2O more commonly known as?", a:"Water"},
+    {q:"What is the square root of 64?", a:"8"}
+  ];
+  let teenIndex = 0;
+
+  function nextQuestion(){
+    teenIndex = (teenIndex + 1) % teenQuestions.length;
+    document.getElementById('teen-question').textContent = teenQuestions[teenIndex].q;
+  }
+
+  function showAnswer(){
+    alert(`Answer: ${teenQuestions[teenIndex].a}`);
+  }
+  document.getElementById('teen-question').textContent = teenQuestions[teenIndex].q;
+
+  // BUDGET PLANNER (Adults)
+  function calcBudget(){
+    const inc = parseFloat(document.getElementById('income').value) || 0;
+    const exp = parseFloat(document.getElementById('expenses').value) || 0;
+    const goal = parseFloat(document.getElementById('savingsGoal').value) || 0;
+    const leftover = inc - exp - goal;
+    let resultText;
+    if(leftover >= 0){
+      resultText = `Great! You have AED ${leftover.toFixed(2)} left after expenses and savings.`;
+    } else {
+      resultText = `Warning: You are overspending by AED ${Math.abs(leftover).toFixed(2)}. Consider reducing expenses or savings goals.`;
+    }
+    document.getElementById('budgetResult').textContent = resultText;
+  }
+
+  function downloadBudget(){
+    const inc = document.getElementById('income').value;
+    const exp = document.getElementById('expenses').value;
+    const goal = document.getElementById('savingsGoal').value;
+    const result = document.getElementById('budgetResult').textContent || 'No calculation done yet.';
+    const content = `Income: AED ${inc}\nExpenses: AED ${exp}\nSavings Goal: AED ${goal}\nResult: ${result}`;
+    const blob = new Blob([content], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'budget-summary.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // SENIORS - RANDOM RIDDLES (expanded for many questions)
+  const seniorsRiddles = [
+  { q: "What has keys but can't open locks?", a: "piano" },
+  { q: "What has hands but can't clap?", a: "clock" },
+  { q: "What can travel around the world while staying in a corner?", a: "stamp" },
+  { q: "The more you take, the more you leave behind. What am I?", a: "footsteps" },
+  { q: "What has many teeth but cannot bite?", a: "comb" },
+  { q: "What gets wetter the more it dries?", a: "towel" },
+  { q: "What has one eye but cannot see?", a: "needle" },
+  { q: "What can you catch but not throw?", a: "cold" },
+  { q: "What has a head and a tail but no body?", a: "coin" },
+  { q: "What begins with T, ends with T, and has T in it?", a: "teapot" },
+  { q: "I speak without a mouth and hear without ears. What am I?", a: "echo" },
+  { q: "The more there is, the less you see. What am I?", a: "darkness" },
+  { q: "I’m tall when I’m young and short when I’m old. What am I?", a: "candle" },
+  { q: "I have cities, but no houses. I have mountains, but no trees. What am I?", a: "map" },
+  { q: "I am always hungry, must always be fed. What am I?", a: "fire" },
+  { q: "Forward I am heavy, backward I am not. What am I?", a: "ton" },
+  { q: "A box without hinges, key, or lid, yet golden treasure inside is hid. What am I?", a: "egg" },
+  { q: "I have a bed but never sleep. I run but never walk. What am I?", a: "river" },
+  { q: "I can be cracked, made, told, and played. What am I?", a: "joke" },
+  { q: "I can fly without wings. What am I?", a: "time" },
+  { q: "I am always coming but never arrive. What am I?", a: "tomorrow" },
+  { q: "I am full of holes but still hold water. What am I?", a: "sponge" },
+  { q: "I have a spine but no bones. What am I?", a: "book" },
+  { q: "I have a heart that doesn't beat. What am I?", a: "artichoke" },
+  { q: "I am light as a feather, yet the strongest man cannot hold me for long. What am I?", a: "breath" },
+  { q: "I have a ring but no finger. What am I?", a: "phone" },
+  { q: "I come down but never go up. What am I?", a: "rain" },
+  { q: "I can be opened but never closed. What am I?", a: "mouth" },
+  { q: "I am always in water but never get wet. What am I?", a: "reflection" },
+  { q: "I have an eye but no head. What am I?", a: "storm" },
+  { q: "I can be long or short, grown or bought, painted or bare. What am I?", a: "hair" },
+  { q: "I have teeth but cannot bite. What am I?", a: "saw" },
+  { q: "I am taken from a mine, and shut in a wooden case, used by almost every person. What am I?", a: "pencil" },
+  { q: "The more you pull me, the longer I become. What am I?", a: "rope" },
+  { q: "I’m always in front of you but cannot be seen. What am I?", a: "future" },
+  { q: "I have a face but no mouth. What am I?", a: "clock" },
+  { q: "I have a neck but no head. What am I?", a: "bottle" },
+  { q: "I’m light, but you cannot hold me for long. What am I?", a: "breath" },
+  { q: "I am not alive, but I grow; I don’t have lungs, but I need air. What am I?", a: "fire" },
+  { q: "I turn once, what is out will not get in. I turn again, what is in will not get out. What am I?", a: "key" },
+  { q: "I can be cracked but never fall. What am I?", a: "promise" }
+];
+
+  let currentRiddleIndex = 0;
+
+  function nextRiddle() {
+    currentRiddleIndex = Math.floor(Math.random() * seniorsRiddles.length);
+    const r = seniorsRiddles[currentRiddleIndex];
+    const riddleEl = document.getElementById('riddle');
+    const feedbackEl = document.getElementById('riddleFeedback');
+    const inputEl = document.getElementById('riddleAnswer');
+    if (riddleEl) riddleEl.textContent = r.q;
+    if (feedbackEl) { feedbackEl.textContent = ''; feedbackEl.style.color = ''; }
+    if (inputEl) inputEl.value = '';
+  }
+
+  function checkRiddleAnswer() {
+    const inputEl = document.getElementById('riddleAnswer');
+    const feedbackEl = document.getElementById('riddleFeedback');
+    if (!inputEl || !feedbackEl) return;
+    const user = inputEl.value.trim().toLowerCase();
+    const correct = seniorsRiddles[currentRiddleIndex].a.toLowerCase();
+
+    if (user === '') {
+      feedbackEl.textContent = '⚠️ Please enter an answer.';
+      feedbackEl.style.color = '#eab308';
+      return;
+    }
+    if (user === correct) {
+      feedbackEl.textContent = '🎉 Correct! Well done.';
+      feedbackEl.style.color = '#16a34a';
+      setTimeout(nextRiddle, 1400);
+    } else {
+      feedbackEl.textContent = `❌ Wrong. The correct answer is: "${seniorsRiddles[currentRiddleIndex].a}".`;
+      feedbackEl.style.color = '#ef4444';
+    }
+  }
+
+  // CONTACT FORM SUBMISSION
+  function handleContactSubmit(event) {
+    event.preventDefault();
+    const recipient = document.getElementById('recipient').value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if(recipient && name && email && message){
+      alert(`Thanks, ${name}! Your message has been received and will be sent to the ${recipient.replace('_',' ')}.`);
+      document.getElementById('recipient').value = '';
+      document.getElementById('name').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('message').value = '';
+    } else {
+      alert('Please fill in all fields.');
+    }
+  }
+
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({pageLanguage:'en'}, 'google_translate_element');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    nextRiddle();
+  });
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
